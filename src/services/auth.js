@@ -3,9 +3,12 @@ import { prisma } from '../prisma.js';
 import { FIFTEEN_MINUTES, TWO_DAYS } from '../constants/time.js';
 import crypto from 'node:crypto';
 
-export const createSession = (userId) => {
+export const createSession = async (userId) => {
   const accessToken = crypto.randomBytes(30).toString('base64');
   const refreshToken = crypto.randomBytes(30).toString('base64');
+
+  // One session per user (userId is unique): remove existing session first
+  await prisma.session.deleteMany({ where: { userId } });
 
   return prisma.session.create({
     data: {
