@@ -2,28 +2,19 @@ import { Router } from 'express';
 
 import ctrlWrapper from '../utils/ctrlWrapper.js';
 import { celebrate } from 'celebrate';
-import { upload } from '../middleware/multer.js';
 
-import {
-  getDealsController,
-  createDealController,
-} from '../controllers/dealsController.js';
-
+import { getDealsController } from '../controllers/dealsController.js';
 import { authenticate } from '../middleware/authenticate.js';
-
-import { createDealSchema } from '../validations/dealsValidation.js';
+import { getAllDealsSchema } from '../validations/dealsValidation.js';
 
 const dealRoute = Router();
 
 dealRoute.use('/', authenticate);
 
-dealRoute.get('/', ctrlWrapper(getDealsController));
-
-dealRoute.post(
-  '/create',
-  upload.single('image'),
-  celebrate(createDealSchema),
-  ctrlWrapper(createDealController),
+dealRoute.get(
+  '/deals',
+  celebrate(getAllDealsSchema),
+  ctrlWrapper(getDealsController),
 );
 
 export default dealRoute;
