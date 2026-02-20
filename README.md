@@ -23,6 +23,43 @@ The project is built using a layered architecture, ensuring clear separation of 
 
 ## 🛠 Installation and Local Run
 
+### 1. Clone the repository 
+```bash 
+git clone https://github.com/your-username/zenbit-backend.git 
+cd zenbit-backend
+```
+### 2. Install dependencies
+```
+npm install
+
+```
+### 3. Environment variables
+```
+DATABASE_URL="postgresql://<user>:<password>@<host>/<db>?schema=public"
+JWT_SECRET="your_jwt_secret"
+CLOUDINARY_CLOUD_NAME="your_cloud_name"
+CLOUDINARY_API_KEY="your_api_key"
+CLOUDINARY_API_SECRET="your_api_secret"
+PORT=5000
+
+```
+### 4. Database setup
+Run Prisma migrations to initialize the database schema:
+```
+npx prisma migrate dev
+
+```
+Generate Prisma client:
+```
+npx prisma generate
+
+```
+### 5. Start the server
+```
+npm run dev
+
+```
+
 📂 Project Structure
 
 ```
