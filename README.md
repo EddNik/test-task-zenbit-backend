@@ -64,7 +64,7 @@ Deals
 
     - PUT /deals/:id — Update deal by ID
 
-- DELETE /deals/:id — Delete deal by ID
+    - DELETE /deals/:id — Delete deal by ID
 
 Media
 
