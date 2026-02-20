@@ -63,11 +63,12 @@ export const loginUser = async (req, res, next) => {
       throw createHttpError(401, 'Invalid credentials');
     }
 
-    await prisma.session
-      .delete({
-        where: { userId: existingUser.id },
-      })
-      .catch(() => {});
+    // удаляем для одинuser одна сессия - безопасность, не собираем сессии в базе
+    // await prisma.session
+    //   .delete({
+    //     where: { userId: existingUser.id },
+    //   })
+    //   .catch(() => {});
 
     const newSession = await createSession(existingUser.id);
 
@@ -82,11 +83,11 @@ export const loginUser = async (req, res, next) => {
 
 export const logoutUser = async (req, res, next) => {
   try {
-    const { accessToken } = req.cookies ?? {};
+    const { sessionId } = req.cookies ?? {};
 
-    if (accessToken) {
-      await prisma.session.deleteMany({
-        where: { accessToken },
+    if (sessionId) {
+      await prisma.session.delete({
+        where: { id: Number(sessionId) },
       });
     }
 

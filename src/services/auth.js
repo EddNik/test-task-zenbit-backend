@@ -8,7 +8,8 @@ export const createSession = async (userId) => {
   const accessToken = crypto.randomBytes(30).toString('base64');
   const refreshToken = crypto.randomBytes(30).toString('base64');
 
-  await prisma.session.deleteMany({ where: { userId } });
+  // безопасность + не накапливаем записей в базе висячих сессий
+  // await prisma.session.deleteMany({ where: { userId } });
 
   return prisma.session.create({
     data: {
@@ -44,7 +45,10 @@ export const refreshSession = async (refreshToken) => {
   const newAccessToken = crypto.randomBytes(30).toString('base64');
 
   return prisma.session.update({
-    where: { userId: session.userId },
+    // where: { userId: session.userId },
+
+    // ищем конкретную сессию т.к. разрешаем несколько сессий для одного user
+    where: { id: session.id },
     data: {
       accessToken: newAccessToken,
       accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
