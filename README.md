@@ -1,50 +1,72 @@
 # Zenbit Test Task - Backend API
 
-Это серверная часть (REST API) для тестового задания Zenbit. Бэкенд обеспечивает аутентификацию пользователей, управление сделками (deals) и загрузку медиафайлов, предлагая надежную архитектуру и безопасную работу с данными.
+This is the backend part (REST API) for the Zenbit test assignment. The backend provides user authentication, deal management, and media file uploads, offering a reliable architecture and secure data handling.
 
-## 🚀 Стек технологий
+## 🚀 Tech Stack
 
-- **Node.js & Express.js** — ядро приложения и маршрутизация.
-- **Prisma ORM** — типизированное взаимодействие с базой данных.
-- **PostgreSQL (Neon)** — основная реляционная база данных (Serverless).
-- **Cloudinary** — облачное хранилище для загрузки и хранения изображений.
-- **JWT (JSON Web Tokens)** — аутентификация и авторизация.
-- **Joi / Zod** — валидация входящих данных.
-- **ESLint & Prettier** — поддержание стандартов качества кода.
+- **Node.js & Express.js** — application core and routing.
+- **Prisma ORM** — type-safe database interaction.
+- **PostgreSQL (Neon)** — primary relational database (Serverless).
+- **Cloudinary** — cloud storage for uploading and storing images.
+- **JWT (JSON Web Tokens)** — authentication and authorization.
+- **Joi / Zod** — validation of incoming data.
+- **ESLint & Prettier** — maintaining code quality standards.
 
-## ⚙️ Архитектура
+## ⚙️ Architecture
 
-Проект построен с использованием многослойной архитектуры (Layered Architecture), что обеспечивает четкое разделение ответственности:
+The project is built using a layered architecture, ensuring clear separation of concerns:
 
-- **Routes:** Определение API эндпоинтов.
-- **Controllers:** Обработка HTTP-запросов и ответов.
-- **Services:** Бизнес-логика приложения.
-- **Middleware:** Обработка ошибок, логгирование, проверка токенов и прав доступа.
+- **Routes:** Definition of API endpoints.
+- **Controllers:** Handling HTTP requests and responses.
+- **Services:** Application business logic.
+- **Middleware:** Error handling, logging, token and access rights verification.
 
-## 🛠 Установка и запуск локально
+## 🛠 Installation and Local Run
 
-1. **Клонируйте репозиторий:**
-
-   ```bash
-   git clone <URL_репозитория>
-   cd test-task-zenbit-backend
-
-
-   ```
-
-   📂 Структура проекта
+📂 Project Structure
 
 ```
-   src/
-   ├── controllers/ # Обработчики запросов (auth, deals, users)
-   ├── middleware/ # Middleware (auth, error handlers, logger)
-   ├── routes/ # Определение маршрутов API
-   ├── services/ # Бизнес-логика и взаимодействие с Prisma
-   ├── utils/ # Вспомогательные функции (загрузка в Cloudinary, обертки)
-   ├── validations/ # Схемы валидации данных
-   ├── prisma.js # Инициализация клиента Prisma
-   └── server.js # Точка входа в приложение
-   prisma/
-   ├── schema.prisma # Схема базы данных
-   └── migrations/ # История миграций БД
+src/
+├── controllers/ # Request handlers (auth, deals, users)
+├── middleware/ # Middleware (auth, error handlers, logger)
+├── routes/ # API route definitions
+├── services/ # Business logic and Prisma interaction
+├── utils/ # Helper functions (Cloudinary upload, wrappers)
+├── validations/ # Data validation schemas
+├── prisma.js # Prisma client initialization
+└── server.js # Application entry point
+prisma/
+├── schema.prisma # Database schema
+└── migrations/ # Database migration history
 ```
+
+📖 API Endpoints
+Authentication
+
+    - POST /auth/register — Register a new user
+    - Body: { "email": "string", "password": "string" }
+
+    - POST /auth/login — Login and receive JWT
+    - Body: { "email": "string", "password": "string" }
+
+Users
+
+    - GET /users/me — Get current user profile (requires JWT)
+
+Deals
+
+    - GET /deals — Get all deals
+
+    - POST /deals — Create a new deal
+    - Body: { "title": "string", "description": "string", "price": number }
+
+    - GET /deals/:id — Get deal by ID
+
+    - PUT /deals/:id — Update deal by ID
+
+- DELETE /deals/:id — Delete deal by ID
+
+Media
+
+    - POST /upload — Upload image to Cloudinary
+    - Form-data: file
