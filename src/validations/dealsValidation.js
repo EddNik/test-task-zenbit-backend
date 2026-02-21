@@ -22,6 +22,6 @@ export const createDealSchema = {
     sold: Joi.number().required(),
     tiket: Joi.number().required(),
     daysLeft: Joi.number().integer().required(),
-    image: Joi.string().required(),
+    image: Joi.string().optional(),
   }),
 };

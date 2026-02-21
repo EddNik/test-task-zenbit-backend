@@ -57,24 +57,25 @@ export const refreshSession = async (refreshToken) => {
 };
 
 export const setSessionCookies = (res, session) => {
+  const isProduction = process.env.NODE_ENV === 'production';
   res.cookie('accessToken', session.accessToken, {
     httpOnly: true,
-    secure: true,
-    sameSite: 'strict',
+    secure: isProduction,
+    sameSite: 'lax',
     maxAge: FIFTEEN_MINUTES,
   });
 
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
-    secure: true,
-    sameSite: 'strict',
+    secure: isProduction,
+    sameSite: 'lax',
     maxAge: TWO_DAYS,
   });
 
   res.cookie('sessionId', session.id, {
     httpOnly: true,
-    secure: true,
-    sameSite: 'strict',
+    secure: isProduction,
+    sameSite: 'lax',
     maxAge: TWO_DAYS,
   });
 };
