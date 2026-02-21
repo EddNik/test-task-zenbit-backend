@@ -31,6 +31,17 @@ export const createDealController = async (req, res, next) => {
       throw createHttpError(400, 'Image is required');
     }
 
+    const dealData = {
+      title: req.body.title,
+      price: parseFloat(req.body.price),
+      yield: parseFloat(req.body.yield),
+      sold: parseFloat(req.body.sold),
+      tiket: parseFloat(req.body.tiket),
+      daysLeft: parseInt(req.body.daysLeft, 10),
+      image: imageUrl,
+      usersId: req.user.id,
+    };
+
     const newDeal = await dealService.createDeal({
       ...req.body,
       image: imageUrl,
