@@ -1,4 +1,6 @@
 import * as dealService from '../services/deals.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
+import createHttpError from 'http-errors';
 
 export const getDealsController = async (req, res, next) => {
   try {
@@ -16,7 +18,11 @@ export const createDealController = async (req, res, next) => {
     let imageUrl;
 
     if (req.file) {
-      imageUrl = await saveFileToCloudinary(req.file);
+      const uploadResult = await saveFileToCloudinary(
+        req.file.buffer,
+        req.user.id,
+      );
+      imageUrl = uploadResult.secure_url;
     } else {
       imageUrl = req.body.image;
     }
