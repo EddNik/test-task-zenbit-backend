@@ -13,8 +13,17 @@ export const getDealsController = async (req, res, next) => {
 
 export const createDealController = async (req, res, next) => {
   try {
-    const imageUrl =
-      (req.file && (req.file.path || req.file.originalname)) || req.body.image;
+    let imageUrl;
+
+    if (req.file) {
+      imageUrl = await saveFileToCloudinary(req.file);
+    } else {
+      imageUrl = req.body.image;
+    }
+
+    if (!imageUrl) {
+      throw createHttpError(400, 'Image is required');
+    }
 
     const newDeal = await dealService.createDeal({
       ...req.body,

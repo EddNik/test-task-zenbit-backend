@@ -28,6 +28,7 @@ dealRoute.get(
 
 dealRoute.post(
   '/create',
+  authenticate,
   upload.single('image'),
   celebrate(createDealSchema),
   ctrlWrapper(createDealController),
