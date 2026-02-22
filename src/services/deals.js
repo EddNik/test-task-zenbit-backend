@@ -14,7 +14,7 @@ export const createDeal = async (payload) => {
       sold: parseFloat(payload.sold),
       tiket: parseFloat(payload.tiket),
       daysLeft: parseInt(payload.daysLeft),
-      usersId: payload.userId,
+      usersId: payload.usersId,
     },
   });
 };

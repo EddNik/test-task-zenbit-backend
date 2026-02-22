@@ -42,11 +42,7 @@ export const createDealController = async (req, res, next) => {
       usersId: req.user.id,
     };
 
-    const newDeal = await dealService.createDeal({
-      ...req.body,
-      image: imageUrl,
-      userId: req.user.id,
-    });
+    const newDeal = await dealService.createDeal(dealData);
 
     res.status(201).json({
       data: newDeal,
